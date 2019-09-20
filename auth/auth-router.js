@@ -3,6 +3,7 @@ const Users = require("../helpers/usersModel");
 const bcrypt = require("bcryptjs");
 const db = require("../database/dbConfig");
 const generateToken = require("../auth/generate-token");
+const restricted = require("../auth/authenticate-middleware");
 
 const router = express.Router();
 
@@ -41,6 +42,15 @@ router.post("/login", (request, response) => {
     .catch(error => {
       response.status(500).json(error);
     });
+});
+
+// GET to 3300 api/auth/users
+router.get("/users", restricted, (request, response) => {
+  Users.find()
+    .then(users => {
+      response.json({ users, loggedInUser: request.user.username });
+    })
+    .catch(error => response.send(error));
 });
 
 module.exports = router;
