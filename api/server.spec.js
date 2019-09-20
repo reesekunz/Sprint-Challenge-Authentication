@@ -12,8 +12,8 @@ describe("server.js", () => {
         .get("/")
         .then(response => {
           // assert (check) that we get an http status code 200
-          expect(response.status).toBe(500);
-        //   expect(response.status).toBe(200);
+          //   expect(response.status).toBe(500);
+          expect(response.status).toBe(200);
         });
     });
 
@@ -21,11 +21,11 @@ describe("server.js", () => {
       // method 2 - async and await
 
       const response = await request(server).get("/");
-        expect(response.body.api).toBe("it is dead");
-        expect(response.body).toEqual({ api: "it is dead" });
-    //   expect(response.body.api).toBe("it is alive!");
+      // expect(response.body.api).toBe("it is dead");
+      // expect(response.body).toEqual({ api: "it is dead" });
+      expect(response.body.api).toBe("it is alive!");
       // same as
-    //   expect(response.body).toEqual({ api: "it is alive!" });
+      expect(response.body).toEqual({ api: "it is alive!" });
     });
   });
 
@@ -34,8 +34,8 @@ describe("server.js", () => {
     request(server)
       .get("/")
       .then(response => {
-          expect(response.type).toMatch(/xml/i); - make it fail first
-        // expect(response.type).toMatch(/json/i);
+        //   expect(response.type).toMatch(/xml/i); - make it fail first
+        expect(response.type).toMatch(/json/i);
         done();
       });
   });
