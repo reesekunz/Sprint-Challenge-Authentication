@@ -19,8 +19,8 @@ describe("usersModel", () => {
 
       let users = await db("users");
       // assert (check) the record was inserted
-      expect(users).toHaveLength(0);
-      //   expect(users).toHaveLength(1);
+      //   expect(users).toHaveLength(0);
+      expect(users).toHaveLength(1);
     });
 
     it("should add a user into the db", async () => {
@@ -29,13 +29,13 @@ describe("usersModel", () => {
         username: "Reese",
         password: "password"
       });
-      console.log("id", id);
+      //   console.log("id", id);
       let user = await db("users")
         .where({ id })
         .first();
-      console.log(user);
-      expect(user.username).toBe("Sam");
-      //   expect(user.username).toBe("Reese");
+      //   console.log(user);
+      //   expect(user.username).toBe("Sam");
+      expect(user.username).toBe("Reese");
     });
   });
 });
