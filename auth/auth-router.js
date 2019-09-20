@@ -48,7 +48,7 @@ router.post("/login", (request, response) => {
 router.get("/users", restricted, (request, response) => {
   Users.find()
     .then(users => {
-      response.json({ users, loggedInUser: request.user.username });
+      response.status(200).json({ users, loggedInUser: request.user.username });
     })
     .catch(error => response.send(error));
 });

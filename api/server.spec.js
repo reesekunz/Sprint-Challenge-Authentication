@@ -29,7 +29,7 @@ describe("server.js", () => {
     });
   });
 
-  // method 3
+  // method 3 - using done ()
   it("returns JSON", done => {
     request(server)
       .get("/")
