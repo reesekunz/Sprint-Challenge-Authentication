@@ -1,31 +1,35 @@
 const request = require("supertest");
-const server = require("../api/server");
-// const express = require("express");
-// const router = express.Router();
+const Users = require("../helpers/usersModel");
+const db = require("../database/dbConfig");
+const authRouter = require("../auth/auth-router");
 
-// TESTING POST TO REGISTER
+// TESTING POST to /register
 describe("POST to /register", () => {
-  it("returns 201 status", () => {
-    // make a GET request to the / endpoint on the server
-    // method 1 - returning
-    // need to return so JEST knows its a promise (needs to wait for result) - otherwise test would return false positive
-    return request(server)
-      .post("api/auth/register")
-      .then(response => {
-        // assert (check) that we get an http status code 200
-        //   expect(response.status).toBe(500);
-        expect(response.status).toBe(201);
-      });
+  // beforeEach cleans up the table, resets the database with truncate()
+  beforeEach(async () => {
+    await db("users").truncate();
   });
-
-  it("should return { api: 'it is alive!' }", async () => {
+  it("returns 201 status to show successful post", async () => {
+    // make a POST request to the /api/auth/register endpoint on the server
+    // method 2 - async and await
+    const user = { username: "testing", password: "testing" };
+    const response = await request(authRouter)
+      .post("/api/auth/register")
+      .send(user);
+    // assert (check) that we get an http status code 201
+    //   expect(response.status).toBe(500);
+    expect(response.status).toBe(201);
+  });
+  it("should return post body as expected", async () => {
     // method 2 - async and await
 
-    const response = await request(server).get("/");
-    // expect(response.body.api).toBe("it is dead");
-    // expect(response.body).toEqual({ api: "it is dead" });
-    expect(response.body.api).toBe("it is alive!");
-    // same as
-    expect(response.body).toEqual({ api: "it is alive!" });
+    const user = { username: "testing", password: "testing" };
+    const response = await Users.add(user);
+
+    expect(response).toEqual({
+      id: 1,
+      username: user.username,
+      password: user.password
+    });
   });
 });

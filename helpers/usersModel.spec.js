@@ -1,3 +1,4 @@
+const request = require("supertest");
 const Users = require("./usersModel");
 const db = require("../database/dbConfig");
 
